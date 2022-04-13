@@ -94,7 +94,6 @@
 		function userUpdate(){
 			//버튼 클릭이벤트 -> ajax
 			const url = "http://localhost/myserver/users";
-			
 
 			$.ajax({
 				url : url,
@@ -102,8 +101,11 @@
 				data : JSON.stringify($('#form1').serializeObject()),
 				contentType : "application/json"
 			}).done(function(response){
+				var id = response.id;
+				
 				let newTr = makeTr(response);
-				let oldTr = $('id='+response.id)
+				let oldTr = $('#'+ id);
+				console.log(oldTr);
 				oldTr.replaceWith(newTr);
 			})
 		}

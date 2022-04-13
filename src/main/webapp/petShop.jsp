@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!-- <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -39,9 +39,9 @@
             <button class="btn btn-default btn-adopt" type="button" data-id="0">Adopt</button>
           </div>
         </div>
-      </div>
-      
-      
+      </div>      
+     </div>      
+   </div>
 
 
     <div id="petTemplate" style="display: none;">
@@ -63,6 +63,46 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script>
+		$(function(){
+			list();
+		})
 	
+		
+		
+		function list(){
+			const url = "http://localhost/myserver/petSelect";
+			$.ajax(url)
+			.done(function(datas){
+				console.log(datas);
+				for(data of datas){
+					$('#petsRow').append(makeTr(data))
+				}
+			})
+		}
+		
+		function makeTr(pet){
+			let div = $('<div>').addClass('col-sm-6 col-md-4 col-lg-3');
+			div.html(`<div class="panel panel-default panel-pet">
+	          <div class="panel-heading">
+	            <h3 class="panel-title">\${pet.name}</h3>
+	          </div>
+	          <div class="panel-body">
+	            <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;" src=\${pet.picture} data-holder-rendered="true">
+	            <br/><br/>
+	            <strong>Breed</strong>: <span class="pet-breed">\${pet.breed}</span><br/>
+	            <strong>Age</strong>: <span class="pet-age">\${pet.age}</span><br/>
+	            <strong>Location</strong>: <span class="pet-location">\${pet.location}</span><br/><br/>
+	            <button class="btn btn-default btn-adopt" type="button" data-id="0">Adopt</button>
+	          </div>
+	        </div>
+	      </div>      
+	     </div>`)
+	     
+	     return div
+		}
+		
+		
+	</script>
   </body>
 </html>

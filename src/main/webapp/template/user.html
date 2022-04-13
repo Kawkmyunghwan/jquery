@@ -161,8 +161,6 @@
 				document.getElementsByTagName("tbody")[0].prepend( makeTr(user) );
 			};
 			ajax.open("POST", url); 						//5. 비동기 연결을 시작
-			//const qs2 = new URLSearchParams(new FormData(document.getELementById('form1'))).toString();			
-			//ajax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			
 			ajax.setRequestHeader("Content-type", "application/json"); //서버에 보낼 데이터가 json
 			
