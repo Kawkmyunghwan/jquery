@@ -3,7 +3,7 @@
 <mapper namespace="com.yedam.myserver.emp.mapper.EmployeeMapper"> 
 
 <select id="findEmployees"  resultType="employee">
-	select employee_id, first_name, last_name, job_id
+	select *
 	from employees
 	order by employee_id  
 </select>
@@ -54,4 +54,21 @@
 	 order by a.department_id 
 </select>
 
+<select id="findStat" resultType="map">
+	SELECT DEPARTMENT_NAME as "departmentName", 
+		   COUNT(*)        as "cnt"
+	FROM EMPLOYEES E, DEPARTMENTS D
+	WHERE E.DEPARTMENT_ID = D.DEPARTMENT_ID
+	GROUP BY DEPARTMENT_NAME
+	ORDER BY DEPARTMENT_NAME
+</select>
+
+<select id="findSal" resultType="map">
+	SELECT DEPARTMENT_NAME    as "departmentName", 
+		   ROUND(AVG(SALARY)) as "avg"
+	FROM EMPLOYEES E, DEPARTMENTS D
+	WHERE E.DEPARTMENT_ID = D.DEPARTMENT_ID
+	GROUP BY DEPARTMENT_NAME
+	ORDER BY DEPARTMENT_NAME
+</select>
 </mapper>
