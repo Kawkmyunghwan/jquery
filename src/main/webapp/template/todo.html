@@ -4,6 +4,10 @@
     <meta charset="utf-8">
     <link rel="icon" href="./images/favicon.png" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+<script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
 <style>
 body {
   margin: 0;
@@ -136,36 +140,26 @@ input {
 </div>
 
 <ul id="myUL">
-  <li>Hit the gym</li>
-  <li class="checked">Pay bills</li>
-  <li>Meet George</li>
-  <li>Buy eggs</li>
-  <li>Read a book</li>
-  <li>Organize office</li>
 </ul>
 
 <script>
-// Create a "close" button and append it to each list item
-var myNodelist = document.getElementsByTagName("LI");
-var i;
-for (i = 0; i < myNodelist.length; i++) {
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  myNodelist[i].appendChild(span);
-}
+$.ajax({
+	url:"todoSelect"	
+}).done(function(datas){
+	for(todo of datas){
+		let li = $('<li>').html(todo.contents + '<span class="close">"\u00D7"</span>')
+		if(data.todoyn == '1'){
+			li.addClass("checked")
+		}
+		$("#myUL").append(li);
+	}
+})
 
+//이벤트 위임(스판태그 클릭했을때 li태그를 삭제되게, ajax호출)
 // Click on a close button to hide the current list item
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function() {
-    var div = this.parentElement;
-    div.style.display = "none";
-  }
-}
 
+
+$('ul').on('click', 'li')
 // Add a "checked" symbol when clicking on a list item
 var list = document.querySelector('ul');
 list.addEventListener('click', function(ev) {

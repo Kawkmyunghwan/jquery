@@ -39,22 +39,7 @@ public class EmployeeGridController {
 		return Collections.singletonMap("result", true);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	//조회
