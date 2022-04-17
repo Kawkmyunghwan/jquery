@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,8 +23,9 @@ public class TodoController {
 		return mapper.findAll();
 	}
 		
-	@GetMapping("/todoInsert")
-	public TodoVO todoInsert(TodoVO vo) {
+	@GetMapping("/todoInsert/{contents}")
+	public TodoVO todoInsert(@PathVariable String contents, TodoVO vo) {
+		 vo.setContents(contents);
 		 mapper.persist(vo);
 		 return vo;
 	}
@@ -33,8 +35,10 @@ public class TodoController {
 		 mapper.merge(vo);
 		 return vo;
 	}	
-	@GetMapping("/todoDelete")
-	public TodoVO todoDelete(TodoVO vo) {
+	@GetMapping("/todoDelete/{no}")
+	public TodoVO todoDelete(@PathVariable String no, TodoVO vo) {
+		 System.out.println(no);
+		 vo.setNo(no);
 		 mapper.remove(vo);
 		 return vo;
 	}		

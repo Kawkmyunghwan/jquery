@@ -136,64 +136,77 @@ input {
 <div id="myDIV" class="header">
   <h2 style="margin:5px">My To Do List</h2>
   <input type="text" id="myInput" placeholder="Title...">
-  <span onclick="newElement()" class="addBtn">Add</span>
+  <span class="addBtn">Add</span>
 </div>
 
 <ul id="myUL">
 </ul>
 
 <script>
+
 $.ajax({
-	url:"todoSelect"	
+	url:"../todoSelect"	
 }).done(function(datas){
+	console.log(datas);
 	for(todo of datas){
-		let li = $('<li>').html(todo.contents + '<span class="close">"\u00D7"</span>')
-		if(data.todoyn == '1'){
-			li.addClass("checked")
+		let $li = $('<li>').html(todo.contents + '<span class="close">\u00D7</span>')
+		$li.attr('id', todo.no);
+		if(todo.todoyn == '1'){
+			$li.addClass("checked")
 		}
-		$("#myUL").append(li);
+		$("#myUL").append($li);
 	}
 })
 
 //이벤트 위임(스판태그 클릭했을때 li태그를 삭제되게, ajax호출)
-// Click on a close button to hide the current list item
+$('ul').on('click', 'li span' ,function(){
+	var no = $(this).parent().attr('id');
+	var liTag = $(this).parent();
+	console.log(no);
+	$.ajax({
+		url : '../todoDelete/' + no
+	}).done(function(response){
+		liTag.remove();
+	})
+})
 
 
-$('ul').on('click', 'li')
-// Add a "checked" symbol when clicking on a list item
-var list = document.querySelector('ul');
-list.addEventListener('click', function(ev) {
-  if (ev.target.tagName === 'LI') {
-    ev.target.classList.toggle('checked');
-  }
-}, false);
+$('ul').on('click', 'li', function(){
+	var no = $(this).attr('id');
+	var todoyn;
+	var check = $(this);
+	if($(this).attr("class") == 'checked'){
+		todoyn = 0;
+	}else{
+		todoyn = 1;
+	}
+	$.ajax({
+		url : "../todoUpdate",
+		data : {"todoyn" : todoyn,
+				"no" : no}
+	}).done(function(response){
+		if(response.todoyn == 1){
+			check.addClass("checked")
+		}else{
+			check.removeClass();
+		}
+	})
+})
 
-// Create a new list item when clicking on the "Add" button
-function newElement() {
-  var li = document.createElement("li");
-  var inputValue = document.getElementById("myInput").value;
-  var t = document.createTextNode(inputValue);
-  li.appendChild(t);
-  if (inputValue === '') {
-    alert("You must write something!");
-  } else {
-    document.getElementById("myUL").appendChild(li);
-  }
-  document.getElementById("myInput").value = "";
+	
+$('.addBtn').on('click', function(){
+	let contents = $('#myInput').val();
+	console.log(contents)
+	$.ajax({
+		url : '../todoInsert/' + contents
+	}).done(function(response){
+		$li = $('<li>').html(response.contents + '<span class="close">\u00D7</span>')
+		$li.attr('id', response.no);
+		$("#myUL").append($li);
+	})
+})
 
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  li.appendChild(span);
 
-  for (i = 0; i < close.length; i++) {
-    close[i].onclick = function() {
-      var div = this.parentElement;
-      div.style.display = "none";
-    }
-  }
-}
 </script>
 
 </body>
