@@ -99,4 +99,19 @@ public class Employee {
 	
 	
 	
+	@Override
+	public String toString() {
+		return "Employee [first_name=" + first_name + "]";
+	}
+	public Employee() {
+		
+	}
+	
+	public Employee(String first_name) {
+		super();
+		this.first_name = first_name;
+	}
+	
+	
+	
 }
