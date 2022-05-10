@@ -56,10 +56,11 @@
 
 <select id="findStat" resultType="map">
 	SELECT DEPARTMENT_NAME as "departmentName", 
-		   COUNT(*)        as "cnt"
+		   COUNT(*)        as "cnt",
+		   E.DEPARTMENT_ID as "departmentId"
 	FROM EMPLOYEES E, DEPARTMENTS D
 	WHERE E.DEPARTMENT_ID = D.DEPARTMENT_ID
-	GROUP BY DEPARTMENT_NAME
+	GROUP BY DEPARTMENT_NAME, E.DEPARTMENT_ID
 	ORDER BY DEPARTMENT_NAME
 </select>
 
